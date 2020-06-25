@@ -279,7 +279,13 @@
      :initarg :context-menus
      :initform nil
      :documentation "The context menus for the graph"
-     :trait :widget-list))
+     :trait :widget-list)
+   (edge-handles
+     :accessor edge-handles
+     :initarg :edge-handles
+     :initform nil
+     :documentation "The edge handles for the graph"
+     :trait :widget))
   (:metaclass jupyter-widgets:trait-metaclass)
   (:documentation "")
   (:default-initargs

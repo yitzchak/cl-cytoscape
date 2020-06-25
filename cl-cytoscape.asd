@@ -12,5 +12,6 @@
       :components
         ((:file "packages")
          (:file "version")
+         (:file "edge-handles")
          (:file "context-menu")
          (:file "cytoscape")))))

@@ -285,6 +285,7 @@ export class CytoscapeModel extends DOMWidgetModel {
       pixel_ratio: 'auto',
 
       context_menus: [],
+      edge_handles: null,
 
       tooltip_source: '',
     };
@@ -293,6 +294,7 @@ export class CytoscapeModel extends DOMWidgetModel {
   static serializers: ISerializers = {
     context_menus: { deserialize: widgets.unpack_models },
     elements: { deserialize: widgets.unpack_models },
+    edge_handles: { deserialize: widgets.unpack_models },
     ...DOMWidgetModel.serializers,
   };
 
@@ -392,6 +394,7 @@ export class ElementView extends WidgetView {
     if (!this.cytoscape_obj) {
       this.el.innerHTML = "Cytoscape element only usable in a Cytoscape widget.";
     } else if (!this.is_rendered) {
+      console.log(this);
       this.is_rendered = true;
 
       let ele = this.cytoscape_obj.add({
@@ -413,6 +416,7 @@ export class CytoscapeView extends DOMWidgetView {
   elementViews: any;
   contextMenuViews: any;
   cy_container: any;
+  edge_handles_view: any;
 
   initialize(parameters: any): void {
     super.initialize(parameters);
@@ -514,6 +518,8 @@ export class CytoscapeView extends DOMWidgetView {
     this.model.on('change:elements', this.elements_changed, this);
 
     this.model.on('change:context_menus', this.context_menus_changed, this);
+
+    this.model.on('change:edge_handles', this.edge_handles_changed, this);
 
     this.model.on('change:min_zoom', () => {
         this.cytoscape_obj.minZoom(this.model.get('min_zoom'));
@@ -695,6 +701,7 @@ export class CytoscapeView extends DOMWidgetView {
     this.cytoscape_obj.ready(() => {
       this.context_menus_changed();
       this.elements_changed();
+      this.edge_handles_changed();
     });
   }
 
@@ -715,6 +722,22 @@ export class CytoscapeView extends DOMWidgetView {
   context_menus_changed() {
     this.contextMenuViews.update(this.model.get('context_menus'))
       .then((views: Array<any>) => Promise.all(views.map((view: any) => view.render())));
+  }
+
+  edge_handles_changed() {
+    if (this.edge_handles_view) {
+      this.edge_handles_view.remove();
+      this.edge_handles_view = null;
+    }
+
+    if (this.model.get('edge_handles')) {
+      this.create_child_view(this.model.get('edge_handles'), {
+        cytoscape_obj: this.cytoscape_obj
+      }).then((view: any) => {
+        this.edge_handles_view = view;
+        this.edge_handles_view.render();
+      });
+    }
   }
 
   graph_layout_changed() {

@@ -28,8 +28,12 @@ function activateWidgetExtension(
     name: MODULE_NAME,
     version: MODULE_VERSION,
 
-    exports: async () =>
-      await import(/* webpackChunkName: "cl-cytoscape" */ './widget'),
+    exports: async () => {
+      return {
+        ...await import(/* webpackChunkName: "cl-cytoscape" */ './widget'),
+        ...await import(/* webpackChunkName: "cl-cytoscape" */ './edge-handles')
+      }
+    }
   });
 }
 

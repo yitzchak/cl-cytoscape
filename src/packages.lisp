@@ -19,20 +19,25 @@
     #:cytoscape-widget
     #:data
     #:desktop-tap-threshold
+    #:disable-browser-gestures
+    #:edge-handles
     #:element
     #:elements
     #:enabled
-    #:fill-color
-    #:fit
     #:enter-fullscreen
     #:exit-fullscreen
+    #:fill-color
+    #:fit
     #:grabbable
     #:grabbed
     #:graph-layout
     #:graph-style
     #:group
+    #:handle-in-draw-mode
+    #:handle-nodes
     #:headless
     #:hide-edges-on-viewport
+    #:hover-delay
     #:indicator-size
     #:item-color
     #:item-text-shadow-color
@@ -45,6 +50,8 @@
     #:min-zoom
     #:motion-blur
     #:motion-blur-opacity
+    #:node-loop-offset
+    #:no-edge-events-in-draw
     #:on-menu-command-select
     #:pan
     #:panning-enabled
@@ -56,7 +63,11 @@
     #:selection-type
     #:selector
     #:separator-width
+    #:snap
+    #:snap-frequency
+    #:snap-threshold
     #:spotlight-padding
+    #:start-edge
     #:style-enabled
     #:texture-on-viewport
     #:tooltip-source
